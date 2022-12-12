@@ -19,6 +19,7 @@ public class AdminController {
 
         dao.save(a);
         HashMap<String,String> map=new HashMap<>();
+        map.put("id",String.valueOf(a.getId()));
         map.put("status","success");
         return map;
     }
@@ -67,4 +68,5 @@ public class AdminController {
     public List<Adminemployee> ViewProfile(@RequestBody Adminemployee v){
         return (List<Adminemployee>) dao.viewProfile(v.getId());
     }
+
 }
