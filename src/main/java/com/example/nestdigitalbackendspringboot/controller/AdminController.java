@@ -32,4 +32,15 @@ public class AdminController {
     public List<Adminemployee> SearchEmp(@RequestBody Adminemployee p){
         return (List<Adminemployee>) dao.SearchEmployee(p.getEmpcode());
     }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/delete",consumes = "application/json",produces = "application/json")
+    public HashMap<String,String> Delete(@RequestBody Adminemployee d)
+    {
+        String id=String.valueOf(d.getEmpcode());
+        System.out.println(id);
+        dao.delete(d.getEmpcode());
+        HashMap<String,String> map=new HashMap<>();
+        map.put("status","success");
+        return map;
+    }
 }
