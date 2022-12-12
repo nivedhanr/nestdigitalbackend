@@ -14,6 +14,11 @@ public interface AdminDao extends CrudRepository<Adminemployee,Integer> {
     List<Adminemployee> SearchEmployee(@Param("empcode")Integer empcode);
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM `employee` WHERE `empcode`=:empcode",nativeQuery = true)
-    void delete(@Param("empcode") Integer empcode);
+    @Query(value = "DELETE FROM `employee` WHERE `id`=:id",nativeQuery = true)
+    void delete(@Param("id") Integer id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "SELECT `id`, `address`, `comfirmpass`, `designation`, `email`, `empcode`, `empname`, `password`, `phnno`, `salary`, `username` FROM `employee` WHERE `email`=:email AND `password`=:password",nativeQuery = true)
+    List<Adminemployee> userLogin(@Param("email") String email,@Param("password") String password);
 }
