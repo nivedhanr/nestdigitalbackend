@@ -48,4 +48,29 @@ public class SecurityController {
         return map;
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/viewsecurityprofile",consumes = "application/json",produces = "application/json")
+    public List<Security> ViewsecurityProfile(@RequestBody Security vs){
+        return (List<Security>) dao1.viewsecurityProfile(vs.getId());
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/securitylogin", consumes = "application/json", produces = "application/json")
+    public HashMap<String, String> securityLogin(@RequestBody Security sl){
+        System.out.println(sl.getEmail());
+        List<Security> result=(List<Security>) dao1.securityLogin(sl.getEmail(),sl.getPassword());
+        HashMap<String,String> st=new HashMap<>();
+        if (result.size()==0){
+            st.put("status","failed");
+            st.put("message","user doesn't exist");
+
+        }
+        else{
+            int id =result.get(0).getId();
+            st.put("userid",String.valueOf(id));
+            st.put("message","user login success");
+        }
+        return st;
+    }
+
 }
