@@ -36,4 +36,16 @@ public class SecurityController {
         return (List<Security>) dao1.Searchsecurity(ss.getSecuritycode());
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/deletesecurity",consumes = "application/json",produces = "application/json")
+    public HashMap<String,String> DeleteSecurity(@RequestBody Security sd)
+    {
+        String id=String.valueOf(sd.getId());
+        System.out.println(id);
+        dao1.deletesecurity(sd.getId());
+        HashMap<String,String> map=new HashMap<>();
+        map.put("status","success");
+        return map;
+    }
+
 }
