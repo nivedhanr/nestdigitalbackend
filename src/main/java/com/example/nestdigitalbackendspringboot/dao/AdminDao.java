@@ -21,4 +21,7 @@ public interface AdminDao extends CrudRepository<Adminemployee,Integer> {
     @Transactional
     @Query(value = "SELECT `id`, `address`, `comfirmpass`, `designation`, `email`, `empcode`, `empname`, `password`, `phnno`, `salary`, `username` FROM `employee` WHERE `email`=:email AND `password`=:password",nativeQuery = true)
     List<Adminemployee> userLogin(@Param("email") String email,@Param("password") String password);
+
+    @Query(value = "SELECT `id`, `address`, `comfirmpass`, `designation`, `email`, `empcode`, `empname`, `password`, `phnno`, `salary`, `username` FROM `employee` WHERE `id`=:id",nativeQuery = true)
+    List<Adminemployee> viewProfile(@Param("id") Integer id);
 }
