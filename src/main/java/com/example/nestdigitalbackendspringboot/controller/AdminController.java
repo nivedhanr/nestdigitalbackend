@@ -62,4 +62,9 @@ public class AdminController {
         }
         return st;
     }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/viewprofile",consumes = "application/json",produces = "application/json")
+    public List<Adminemployee> ViewProfile(@RequestBody Adminemployee v){
+        return (List<Adminemployee>) dao.viewProfile(v.getId());
+    }
 }
