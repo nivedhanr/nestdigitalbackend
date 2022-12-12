@@ -3,12 +3,10 @@ package com.example.nestdigitalbackendspringboot.controller;
 import com.example.nestdigitalbackendspringboot.dao.AdminDao;
 import com.example.nestdigitalbackendspringboot.model.Adminemployee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,5 +22,14 @@ public class AdminController {
         map.put("status","success");
         return map;
     }
-
+    @CrossOrigin(origins = "*")
+    @GetMapping("/viewemp")
+    public List<Adminemployee> ViewEmployee(){
+        return (List<Adminemployee>) dao.findAll();
+    }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path ="/search",consumes = "application/json",produces = "application/json")
+    public List<Adminemployee> SearchEmp(@RequestBody Adminemployee p){
+        return (List<Adminemployee>) dao.SearchEmployee(p.getEmpcode());
+    }
 }
