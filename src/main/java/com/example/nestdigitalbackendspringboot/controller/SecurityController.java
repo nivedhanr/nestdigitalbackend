@@ -30,5 +30,10 @@ public class SecurityController {
     public List<Security> ViewSecurity(){
         return (List<Security>) dao1.findAll();
     }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path ="/searchsecurity",consumes = "application/json",produces = "application/json")
+    public List<Security> SearchSecurity(@RequestBody Security ss){
+        return (List<Security>) dao1.Searchsecurity(ss.getSecuritycode());
+    }
 
 }
