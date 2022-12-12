@@ -5,12 +5,10 @@ import com.example.nestdigitalbackendspringboot.dao.SecurityDao;
 import com.example.nestdigitalbackendspringboot.model.Adminemployee;
 import com.example.nestdigitalbackendspringboot.model.Security;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class SecurityController {
@@ -26,6 +24,11 @@ public class SecurityController {
         map.put("id",String.valueOf(s.getId()));
         map.put("status","success");
         return map;
+    }
+    @CrossOrigin(origins = "*")
+    @GetMapping("/viewsecurity")
+    public List<Security> ViewSecurity(){
+        return (List<Security>) dao1.findAll();
     }
 
 }
