@@ -3,13 +3,12 @@ package com.example.nestdigitalbackendspringboot.controller;
 import com.example.nestdigitalbackendspringboot.dao.LeaveDao;
 import com.example.nestdigitalbackendspringboot.model.LeaveModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class LeaveController {
@@ -24,5 +23,24 @@ public class LeaveController {
         lm.setApplyDate(currentdate);
         dao2.save(lm);
         return "{status:'success'}";
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/updatestatus",consumes = "application/json",produces = "application/json")
+    public String updateStatus(@RequestBody LeaveModel lm){
+        dao2.updateById(lm.getStatus(),lm.getId());
+        return "{status:'success'}";
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/viewallleaves")
+    public List<Map<String ,String>> viewallleaves(){
+        return (List<Map<String, String>>) dao2.viewAllLeaveBy();
+
+    }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/viewleavesbyempcode",consumes = "application/json",produces = "application/json")
+    public  List<Map<String,String>> viewLeavesByCode(@RequestBody LeaveModel lm){
+        return (List<Map<String, String>>) dao2.viewLeaveByCode(lm.getEmpcode());
     }
 }
