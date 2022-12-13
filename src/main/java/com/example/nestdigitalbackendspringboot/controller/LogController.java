@@ -22,12 +22,13 @@ public class LogController {
         LocalDateTime now=LocalDateTime.now();
         String currentdate=String.valueOf(dt.format(now));
         l.setInDate(currentdate);
+//      l.setCheckOut(String.valueOf(0));
         dao3.save(l);
         return "{status:'success'}";
     }
     @CrossOrigin(origins = "*")
     @Transactional
-    @PostMapping(path = "/logout",consumes = "application/json",produces = "application/json")
+    @PostMapping(path = "/loglogout",consumes = "application/json",produces = "application/json")
     public String logOutStatus(@RequestBody Log l){
         DateTimeFormatter dt=DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm:ss");
         LocalDateTime now=LocalDateTime.now();
@@ -37,7 +38,7 @@ public class LogController {
         return "{status:success}";
     }
     @CrossOrigin(origins = "*")
-    @GetMapping("/viewalllogs")
+    @GetMapping(path = "/viewalllogs",consumes = "application/json",produces = "application/json")
     public List<Map<String,String>> viewAllLog(){
         return (List<Map<String, String>>) dao3.viewAllLogBy();
     }

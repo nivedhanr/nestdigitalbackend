@@ -2,6 +2,7 @@ package com.example.nestdigitalbackendspringboot.controller;
 
 import com.example.nestdigitalbackendspringboot.dao.LeaveDao;
 import com.example.nestdigitalbackendspringboot.model.LeaveModel;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class LeaveController {
         return "{status:'success'}";
     }
 
+    @Transactional
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/updatestatus",consumes = "application/json",produces = "application/json")
     public String updateStatus(@RequestBody LeaveModel lm){
