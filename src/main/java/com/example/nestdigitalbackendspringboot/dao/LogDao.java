@@ -17,6 +17,6 @@ public interface LogDao extends CrudRepository<Log,Integer> {
     @Query(value = "SELECT l.`id`, l.`check_in`, l.`check_out`, l.`empcode`, l.`in_date`, l.`out_date`,e.empname,e.designation FROM `log` l JOIN employee e ON l.empcode=e.empcode",nativeQuery = true)
     List<Map<String,String>> viewAllLogBy();
 
-    @Query(value = "SELECT l.`id`, l.`check_in`, l.`check_out`, l.`empcode`, l.`in_date`, l.`out_date`,e.empname FROM `log` l JOIN employee e ON l.empcode=e.empcode WHERE l.empcode=:e.empcode",nativeQuery = true)
-    List<Map<String,String>> viewlogByEmpid(Integer emp_id);
+    @Query(value = "SELECT l.`id`, l.`check_in`, l.`check_out`, l.`empcode`, l.`in_date`, l.`out_date`,e.empname FROM `log` l JOIN employee e ON l.empcode=e.empcode WHERE l.empcode=e.empcode",nativeQuery = true)
+    List<Map<String,String>> viewlogByEmpid(@Param("empcode") Integer empcode);
 }
