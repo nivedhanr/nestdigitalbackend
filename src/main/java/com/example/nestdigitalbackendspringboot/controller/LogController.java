@@ -1,51 +1,76 @@
 package com.example.nestdigitalbackendspringboot.controller;
 
 import com.example.nestdigitalbackendspringboot.dao.LogDao;
+import com.example.nestdigitalbackendspringboot.dao.VisitorDao;
 import com.example.nestdigitalbackendspringboot.model.Log;
+import com.example.nestdigitalbackendspringboot.model.Visitor;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 public class LogController {
+
+
     @Autowired
-    private LogDao dao3;
+    private LogDao edao;
+
+    @Autowired
+    private VisitorDao vdao;
+
     @CrossOrigin(origins = "*")
-    @PostMapping(path = "/addlog",consumes = "application/json",produces = "application/json")
-    public String addLog(@RequestBody Log l){
-        DateTimeFormatter dt=DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm:ss");
-        LocalDateTime now=LocalDateTime.now();
-        String currentdate=String.valueOf(dt.format(now));
-        l.setInDate(currentdate);
-//      l.setCheckOut(String.valueOf(0));
-        dao3.save(l);
-        return "{status:'success'}";
+    @PostMapping(path = "/logEmployee",consumes = "application/json",produces = "application/json")
+    public Map<String,String> EmployLog(@RequestBody Log emp)
+    {
+
+        edao.save(emp);
+        HashMap<String,String> map=new HashMap<>();
+        map.put("status","success");
+        return map;
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping(path = "/viewAllEmployeeLog")
+    public List<Log> ViewAllEmployeeLog()
+    {
+        return (List<Log>) edao.findAll();
     }
     @CrossOrigin(origins = "*")
-    @Transactional
-    @PostMapping(path = "/loglogout",consumes = "application/json",produces = "application/json")
-    public String logOutStatus(@RequestBody Log l){
-        DateTimeFormatter dt=DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm:ss");
-        LocalDateTime now=LocalDateTime.now();
-        String currentdate=String.valueOf(dt.format(now));
-        l.setOutDate(currentdate);
-        dao3.logOutStatus(l.getCheckOut(),l.getOutDate(),l.getEmpcode());
-        return "{status:success}";
+    @PostMapping(path = "/viewDailyEmployeeLog",consumes = "application/json",produces = "application/json")
+    public List<Log> viewDailyEmployeeLog(@RequestBody Log emp)
+    {
+        return (List<Log>) edao.viewDailyEmployeeLog(emp.getDate());
     }
+//
     @CrossOrigin(origins = "*")
-    @GetMapping(path = "/viewalllogs",consumes = "application/json",produces = "application/json")
-    public List<Map<String,String>> viewAllLog(){
-        return (List<Map<String, String>>) dao3.viewAllLogBy();
+    @PostMapping(path = "/logVisitor",consumes = "application/json",produces = "application/json")
+    public Map<String,String> VisitorLog(@RequestBody Visitor v)
+    {
+
+        vdao.save(v);
+        HashMap<String,String> map =new HashMap<>();
+        map.put("status","success");
+        return map;
     }
+//
     @CrossOrigin(origins = "*")
-    @PostMapping(path = "/viewlogbyid",consumes = "application/json",produces = "application/json")
-    public List<Map<String,String>> viewLogByEmp(@RequestBody Log l){
-        return (List<Map<String, String>>) dao3.viewlogByEmpid(l.getEmpcode());
+    @GetMapping(path = "/viewAllVisitorLog")
+    public List<Visitor> ViewAllVisitorLog()
+    {
+        return (List<Visitor>) vdao.findAll();
+    }
+//
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/viewDailyVisitorLog",consumes = "application/json",produces = "application/json")
+    public List<Visitor> ViewDailyVisitorLog(@RequestBody Visitor v)
+    {
+        return (List<Visitor>) vdao.ViewDailyVisitorLog(v.getDate());
     }
 
 
