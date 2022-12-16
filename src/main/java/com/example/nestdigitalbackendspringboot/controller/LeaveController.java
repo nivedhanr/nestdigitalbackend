@@ -45,6 +45,26 @@ public class LeaveController {
 
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/accept",consumes = "application/json",produces = "application/json")
+    public Map<String,String> AcceptLeave(@RequestBody LeaveModel l)
+    {
+        dao2.AcceptLeave(l.getEmpId());
+        HashMap<String,String> map=new HashMap<>();
+        map.put("status","success");
+
+        return map;
+    }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/searchstatus",consumes = "application/json",produces = "application/json")
+    public List<LeaveModel> SearchStatus(@RequestBody LeaveModel l)
+    {
+        String empId=String.valueOf(l.getEmpId());
+        System.out.println(empId);
+        return (List<LeaveModel>) dao2.SearchStatus(l.getEmpId());
+    }
+
+
 //    @CrossOrigin(origins = "*")
 //    @GetMapping("/viewallleaves")
 //    public List<Map<String,String>> viewallleaves(){
