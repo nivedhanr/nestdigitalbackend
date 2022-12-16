@@ -38,13 +38,19 @@ public class LeaveController {
         map.put("status","success");
         return map;
     }
-
     @CrossOrigin(origins = "*")
     @GetMapping("/viewallleaves")
-    public List<Map<String,String>> viewallleaves(){
-        return (List<Map<String,String>>) dao2.viewAllLeaveBy();
+    public List<LeaveModel> viewallleaves(){
+        return (List<LeaveModel>) dao2.findAll();
 
     }
+
+//    @CrossOrigin(origins = "*")
+//    @GetMapping("/viewallleaves")
+//    public List<Map<String,String>> viewallleaves(){
+//        return (List<Map<String,String>>) dao2.viewAllLeaveBy();
+//
+//    }
 //    @CrossOrigin(origins = "*")
 //    @PostMapping(path = "/viewleavesbyempcode",consumes = "application/json",produces = "application/json")
 //    public  List<Map<String,String>> viewLeavesByCode(@RequestBody LeaveModel lm){
